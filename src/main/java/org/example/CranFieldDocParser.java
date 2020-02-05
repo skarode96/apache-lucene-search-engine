@@ -9,12 +9,6 @@ import java.util.List;
 
 public class CranFieldDocParser {
 
-    private List<CranFieldDoc> cranFieldDocs;
-
-    public static boolean parse() {
-        return true;
-    }
-
     public static List<CranFieldDoc> readCranFieldDocs(String path) {
         List<CranFieldDoc> cranFieldDocs = new ArrayList<>();
         CranFieldDoc cranFieldDoc;
@@ -38,7 +32,7 @@ public class CranFieldDocParser {
                         } else if(line.matches("(\\.B)")){
                             sb = new StringBuilder();
                             line = readConsecutiveLines(bufferedReader, sb, "(\\.W)", bufferedReader.readLine());
-                            cranFieldDoc.setBiblography(sb.toString());
+                            cranFieldDoc.setBibliography(sb.toString());
                         } else if(line.matches("(\\.W)")){
                             sb = new StringBuilder();
                             line = readConsecutiveLines(bufferedReader, sb, "(\\.I)( )(\\d)*", bufferedReader.readLine());

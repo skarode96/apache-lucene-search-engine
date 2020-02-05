@@ -8,22 +8,33 @@ public class CranFieldDoc {
     private String Id;
     private String title;
     private String authors;
-    private String biblography;
+    private String bibliography;
     private String words;
 
     public CranFieldDoc() {
     }
 
-    public CranFieldDoc(String id, String title, String authors, String biblography, String words) {
+    public CranFieldDoc(String id, String title, String authors, String bibliography, String words) {
         Id = id;
         this.title = title;
         this.authors = authors;
-        this.biblography = biblography;
+        this.bibliography = bibliography;
         this.words = words;
     }
 
     public String getId() {
         return Id;
+    }
+
+    @Override
+    public String toString() {
+        return "CranFieldDoc{" +
+                "Id='" + Id + '\'' +
+                ", title='" + title + '\'' +
+                ", authors='" + authors + '\'' +
+                ", bibliography='" + bibliography + '\'' +
+                ", words='" + words + '\'' +
+                '}';
     }
 
     public void setId(String id) {
@@ -46,12 +57,12 @@ public class CranFieldDoc {
         this.authors = authors;
     }
 
-    public String getBiblography() {
-        return biblography;
+    public String getBibliography() {
+        return bibliography;
     }
 
-    public void setBiblography(String biblography) {
-        this.biblography = biblography;
+    public void setBibliography(String bibliography) {
+        this.bibliography = bibliography;
     }
 
     public String getWords() {
