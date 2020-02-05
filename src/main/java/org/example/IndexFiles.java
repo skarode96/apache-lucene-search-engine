@@ -51,17 +51,9 @@ import org.apache.lucene.store.FSDirectory;
  */
 public class IndexFiles {
 
-    private IndexFiles() {
-    }
+    private IndexFiles() { }
 
-    /**
-     * Index all text files under a directory.
-     */
     public static void main(String[] args) {
-        String usage = "java org.apache.lucene.demo.IndexFiles"
-                + " [-index INDEX_PATH] [-docs DOCS_PATH] [-update]\n\n"
-                + "This indexes the documents in DOCS_PATH, creating a Lucene index"
-                + "in INDEX_PATH that can be searched with SearchFiles";
         String indexPath = "index";
         String docsPath = null;
         boolean create = true;
@@ -78,7 +70,10 @@ public class IndexFiles {
         }
 
         if (docsPath == null) {
-            System.err.println("Usage: " + usage);
+            System.err.println("Usage: " + ("java org.apache.lucene.demo.IndexFiles"
+                    + " [-index INDEX_PATH] [-docs DOCS_PATH] [-update]\n\n"
+                    + "This indexes the documents in DOCS_PATH, creating a Lucene index"
+                    + "in INDEX_PATH that can be searched with SearchFiles"));
             System.exit(1);
         }
 
