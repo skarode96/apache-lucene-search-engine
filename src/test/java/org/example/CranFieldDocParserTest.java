@@ -1,6 +1,8 @@
 package org.example;
 
 
+import org.example.model.CranFieldDoc;
+import org.example.parser.CranFieldDocParser;
 import org.junit.Assert;
 import org.junit.Test;
 

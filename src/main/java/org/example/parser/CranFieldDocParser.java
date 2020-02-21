@@ -1,4 +1,6 @@
-package org.example;
+package org.example.parser;
+
+import org.example.model.CranFieldDoc;
 
 import java.io.BufferedReader;
 import java.io.IOException;

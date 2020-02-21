@@ -3,6 +3,7 @@ package org.example;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
+import org.example.model.CranFieldDoc;
 
 import java.util.ArrayList;
 import java.util.List;
