@@ -20,6 +20,7 @@ public class Indexer {
         IndexWriter writer = getIndexWriter(update, dir, analyzer);
         indexDocs(documentList, writer);
         writer.close();
+        dir.close();
         return true;
     }
 
@@ -29,6 +30,7 @@ public class Indexer {
             documentList.forEach(doc -> {
                 try {
                     writer.addDocument(doc);
+                    System.out.println("Adding doc" + doc.getFields("Title"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
