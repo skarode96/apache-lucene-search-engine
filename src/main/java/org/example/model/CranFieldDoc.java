@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class CranFieldDoc {
-    private String Id;
+    private String id;
     private String title;
     private String authors;
     private String bibliography;
@@ -15,7 +15,7 @@ public class CranFieldDoc {
     }
 
     public CranFieldDoc(String id, String title, String authors, String bibliography, String words) {
-        Id = id;
+        this.id = id;
         this.title = title;
         this.authors = authors;
         this.bibliography = bibliography;
@@ -23,13 +23,13 @@ public class CranFieldDoc {
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     @Override
     public String toString() {
         return "CranFieldDoc{" +
-                "Id='" + Id + '\'' +
+                "Id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", authors='" + authors + '\'' +
                 ", bibliography='" + bibliography + '\'' +
@@ -38,7 +38,7 @@ public class CranFieldDoc {
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitle() {
