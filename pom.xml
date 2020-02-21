@@ -15,7 +15,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <lucene.version>8.4.1</lucene.version>
+    <lucene.version>7.5.0</lucene.version>
   </properties>
 
   <dependencies>
