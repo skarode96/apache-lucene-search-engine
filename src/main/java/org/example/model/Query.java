@@ -9,6 +9,10 @@ public class Query {
         this.queryString = queryString;
     }
 
+    public Query() {
+
+    }
+
     public String getId() {
         return id;
     }
