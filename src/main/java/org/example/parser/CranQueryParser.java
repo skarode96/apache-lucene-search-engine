@@ -32,10 +32,9 @@ public class CranQueryParser {
                             sb = new StringBuilder();
                             line = readConsecutiveLines(bufferedReader, sb, "(\\.I)( )(\\d)*", bufferedReader.readLine());
                             queryModel.setQueryString(sb.toString());
-                            queryModel.setId(String.valueOf(i));
                         }
-                        i++;
                     }
+                    i++;
                     queries.add(queryModel);
                 }
             }
