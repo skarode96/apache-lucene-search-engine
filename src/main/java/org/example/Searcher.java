@@ -58,7 +58,7 @@ public class Searcher {
         System.out.println("Documents: " + hits.length);
         for (int i = 0; i < hits.length; i++) {
             Document hitDoc = isearcher.doc(hits[i].doc);
-            System.out.println(i + ") " + hitDoc.get("Id") + " " + hits[i].score);
+            System.out.printf("QueryId : %s Iter: 0 Doc Id: %s Rank : %d Hit Score: %s STANDARD%n", queryModel.getId(), hitDoc.get("Id"), i, hits[i].score);
         }
     }
 }

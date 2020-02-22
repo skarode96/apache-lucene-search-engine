@@ -20,11 +20,12 @@ public class CranQueryParser {
         try {
             BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(path));
             String line = bufferedReader.readLine();
-            int i=0;
+            int i=1;
             while(line != null) {
                 if(line.matches("(\\.I)( )(\\d)*")) {
                     StringBuilder sb;
                     QueryModel queryModel = new QueryModel();
+                    queryModel.setId(String.valueOf(i));
                     line = bufferedReader.readLine();
                     while (line != null && !line.matches("(\\.I)( )(\\d)*")) {
                         if(line.matches("(\\.W)")){
@@ -32,8 +33,8 @@ public class CranQueryParser {
                             line = readConsecutiveLines(bufferedReader, sb, "(\\.I)( )(\\d)*", bufferedReader.readLine());
                             queryModel.setQueryString(sb.toString());
                             queryModel.setId(String.valueOf(i));
-                            i++;
                         }
+                        i++;
                     }
                     queries.add(queryModel);
                 }
