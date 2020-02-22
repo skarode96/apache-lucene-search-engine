@@ -1,18 +1,18 @@
 package org.example.parser;
 
-import org.example.model.Query;
+import org.example.model.QueryModel;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
 
-public class QueryParserTest {
+public class CranQueryModelParserTest {
 
     @Test
     public void shouldReturnQueryList() {
-        List<Query> queries = QueryParser.parseQueries();
+        List<QueryModel> queries = CranQueryParser.parseQueries();
         Assert.assertEquals(225, queries.size());
-        Assert.assertEquals(false, queries.isEmpty());
+        Assert.assertFalse(queries.isEmpty());
     }
 
 }

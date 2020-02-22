@@ -21,6 +21,7 @@ public class CranFieldDocParser {
                 if(line.matches("(\\.I)( )(\\d)*")) {
                     StringBuilder sb;
                     cranFieldDoc = new CranFieldDoc();
+                    cranFieldDoc.setId(line.substring(3));
                     line = bufferedReader.readLine();
                     while (line != null && !line.matches("(\\.I)( )(\\d)*")) {
                         if(line.matches("(\\.T)")){

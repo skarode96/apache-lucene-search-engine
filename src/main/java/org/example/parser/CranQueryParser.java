@@ -1,6 +1,6 @@
 package org.example.parser;
 
-import org.example.model.Query;
+import org.example.model.QueryModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,14 +9,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueryParser {
-    public static List<Query> parseQueries() {
+public class CranQueryParser {
+    public static List<QueryModel> parseQueries() {
         String path = "cran/cran.qry";
         return loadCranQueryDoc(path);
     }
 
-    private static ArrayList<Query> loadCranQueryDoc(String path) {
-        ArrayList<Query> queries = new ArrayList<>();
+    private static ArrayList<QueryModel> loadCranQueryDoc(String path) {
+        ArrayList<QueryModel> queries = new ArrayList<>();
         try {
             BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(path));
             String line = bufferedReader.readLine();
@@ -24,18 +24,18 @@ public class QueryParser {
             while(line != null) {
                 if(line.matches("(\\.I)( )(\\d)*")) {
                     StringBuilder sb;
-                    Query query = new Query();
+                    QueryModel queryModel = new QueryModel();
                     line = bufferedReader.readLine();
                     while (line != null && !line.matches("(\\.I)( )(\\d)*")) {
                         if(line.matches("(\\.W)")){
                             sb = new StringBuilder();
                             line = readConsecutiveLines(bufferedReader, sb, "(\\.I)( )(\\d)*", bufferedReader.readLine());
-                            query.setQueryString(sb.toString());
-                            query.setId(String.valueOf(i));
+                            queryModel.setQueryString(sb.toString());
+                            queryModel.setId(String.valueOf(i));
                             i++;
                         }
                     }
-                    queries.add(query);
+                    queries.add(queryModel);
                 }
             }
 

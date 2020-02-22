@@ -1,15 +1,15 @@
 package org.example.model;
 
-public class Query {
+public class QueryModel {
     private String id;
     private String queryString;
 
-    public Query(String id, String queryString) {
+    public QueryModel(String id, String queryString) {
         this.id = id;
         this.queryString = queryString;
     }
 
-    public Query() {
+    public QueryModel() {
 
     }
 
