@@ -18,8 +18,8 @@ public class SearcherTest {
 
     @Test
     public void shouldSearchQueryListOverIndex() throws IOException, ParseException {
-        List<QueryModel> queryModels = CranQueryParser.parseQueries();
-        Searcher.search(queryModels);
+        List<QueryModel> queryModels = CranQueryParser.parseQueries("cran/cran.qry");
+        Searcher.search(queryModels, "output", "results.txt");
     }
 
 }

@@ -16,7 +16,6 @@ import org.example.model.QueryModel;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -41,7 +40,7 @@ public class Searcher {
     }
 
 
-    public static void search(List<QueryModel> queryModelList) throws IOException {
+    public static void search(List<QueryModel> queryModelList, String outputDirName, String outputFileName) throws IOException {
         Analyzer analyzer = new StandardAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
         DirectoryReader indexReader = DirectoryReader.open(directory);
@@ -57,11 +56,11 @@ public class Searcher {
                 e.printStackTrace();
             }
         });
-        File outputDir = new File("output");
+        File outputDir = new File(outputDirName);
         if (!outputDir.exists()) outputDir.mkdir();
 
-        Files.write(Paths.get("output/results.txt"), resFileContent, StandardCharsets.UTF_8);
-        System.out.println("Results written to output/results.txt to be used in TREC Eval.");
+        Files.write(Paths.get(outputDirName + "/"+ outputFileName), resFileContent, StandardCharsets.UTF_8);
+        System.out.println("Results written to " + outputDirName + "/"+ outputFileName + "to be used in TREC Eval.");
         indexReader.close();
         directory.close();
     }

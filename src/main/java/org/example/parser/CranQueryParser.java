@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CranQueryParser {
-    public static List<QueryModel> parseQueries() {
-        String path = "cran/cran.qry";
+    public static List<QueryModel> parseQueries(String path) {
         return loadCranQueryDoc(path);
     }
 
