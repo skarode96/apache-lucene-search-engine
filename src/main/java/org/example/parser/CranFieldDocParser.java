@@ -53,7 +53,7 @@ public class CranFieldDocParser {
 
     private static String readConsecutiveLines(BufferedReader bufferedReader, StringBuilder sb, String regex, String line) throws IOException {
         while(line != null && !line.matches(regex)) {
-            sb.append(line);
+            sb.append(line + " ");
             line = bufferedReader.readLine();
         }
         return line;

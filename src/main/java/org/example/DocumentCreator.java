@@ -20,7 +20,6 @@ public class DocumentCreator {
             document.add(new TextField("Bibliography", doc.getBibliography(), Field.Store.YES));
             document.add(new TextField("Authors", doc.getAuthors(), Field.Store.YES));
             document.add(new TextField("Words", doc.getWords(), Field.Store.YES));
-            document.add(new TextField("Title", doc.getTitle(), Field.Store.YES));
             return document;
         }).collect(Collectors.toList());
     }
