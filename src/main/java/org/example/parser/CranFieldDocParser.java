@@ -13,6 +13,7 @@ public class CranFieldDocParser {
 
     public static List<CranFieldDoc> readCranFieldDocs(String path) {
         List<CranFieldDoc> cranFieldDocs = new ArrayList<>();
+        System.out.println("Reading Cranfield Docs....");
         CranFieldDoc cranFieldDoc;
         try {
             BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(path));

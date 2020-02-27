@@ -1,12 +1,12 @@
 package org.example;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.example.analyzer.CustomAnalyzer;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -16,7 +16,7 @@ public class Indexer {
 
     public static boolean index(List<Document> documentList, String indexPath, boolean update) throws IOException {
         Directory dir = getDirectory(indexPath);
-        Analyzer analyzer = new StandardAnalyzer();
+        Analyzer analyzer = new CustomAnalyzer();
         IndexWriter writer = getIndexWriter(update, dir, analyzer);
         indexDocs(documentList, writer);
         writer.close();
@@ -26,17 +26,18 @@ public class Indexer {
 
     private static void indexDocs(List<Document> documentList, IndexWriter writer) {
         if (writer.getConfig().getOpenMode() == IndexWriterConfig.OpenMode.CREATE) {
-            System.out.println("adding document list");
+            System.out.println("Indexing Documents");
             documentList.forEach(doc -> {
                 try {
                     writer.addDocument(doc);
-                    System.out.println("Adding doc" + doc.getFields("Title"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             });
+            System.out.println("Done Indexing...");
         } else {
-            System.out.println("updating ...");
+            System.out.println("updating...");
             documentList.forEach(doc -> {
                 try {
                     writer.addDocument(doc);

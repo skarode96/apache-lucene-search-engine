@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class DocumentCreator {
 
     public static List<Document> createDocs(List<CranFieldDoc> cranFieldDocList) {
+        System.out.println("Creating Documents....");
         return cranFieldDocList.stream().map(doc -> {
             Document document = new Document();
             document.add(new StringField("Id", doc.getId(), Field.Store.YES));

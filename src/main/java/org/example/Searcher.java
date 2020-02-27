@@ -1,6 +1,11 @@
 package org.example;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.core.StopAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -30,30 +35,24 @@ public class Searcher {
     private static String INDEX_DIRECTORY = "index";
     private static int MAX_RESULTS = 1000;
 
-    public static void search(String query) throws IOException, ParseException {
-        Analyzer analyzer = new StandardAnalyzer();
-        List<String> resFileContent = new ArrayList<>();
-        Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
-        DirectoryReader indexReader = DirectoryReader.open(directory);
-        IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-        QueryParser parser = new QueryParser("Title", analyzer);
-        QueryModel queryModel = QueryCreator.getQuery(query);
-        parse(indexSearcher, parser, queryModel, resFileContent);
-        indexReader.close();
-        directory.close();
-    }
-
-
     public static void search(List<QueryModel> queryModelList, String outputDirName, String outputFileName) throws IOException {
-        Analyzer analyzer = new StandardAnalyzer();
+        System.out.println("Searching Queries...");
+        Analyzer analyzer = new CustomAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
         DirectoryReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-        indexSearcher.setSimilarity(new BM25Similarity());
+        indexSearcher.setSimilarity(new ClassicSimilarity());
         List<String> resFileContent = new ArrayList<>();
+        HashMap<String, Float> boostedScores = new HashMap<String, Float>();
+        boostedScores.put("Title", 0.25f);
+        boostedScores.put("Author", 0.05f);
+        boostedScores.put("Bibliography", 0.15f);
+        boostedScores.put("Words", 0.55f);
         MultiFieldQueryParser queryParser = new MultiFieldQueryParser(
                 new String[] {"Title", "Author", "Bibliography", "Words"},
-                analyzer);
+                analyzer
+            ,boostedScores
+                );
         queryModelList.forEach(qm -> {
             try {
                 parse(indexSearcher, queryParser, qm, resFileContent);
@@ -72,13 +71,10 @@ public class Searcher {
     private static void parse(IndexSearcher isearcher, QueryParser queryParser, QueryModel queryModel, List<String> resFileContent) throws ParseException, IOException {
         Query parse = queryParser.parse(QueryParser.escape(queryModel.getQueryString().trim()));
         ScoreDoc[] hits = isearcher.search(parse, MAX_RESULTS).scoreDocs;
-        // Print the results
-        System.out.println("Documents: " + hits.length);
         for (int i = 0; i < hits.length; i++) {
             Document hitDoc = isearcher.doc(hits[i].doc);
             String path = hitDoc.get("Id");
             if (path != null) {
-                System.out.printf("QueryId : %s Iter: 0 Doc Id: %s Rank : %d Hit Score: %s STANDARD%n", queryModel.getId(), hitDoc.get("Id"), i + 1, hits[i].score);
                 resFileContent.add(queryModel.getId() + " 0 " + hitDoc.get("Id") + " 0 " + hits[i].score + " STANDARD");
             }
         }
