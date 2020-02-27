@@ -1,12 +1,6 @@
 package org.example;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.KeywordAnalyzer;
-import org.apache.lucene.analysis.core.SimpleAnalyzer;
-import org.apache.lucene.analysis.core.StopAnalyzer;
-import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
@@ -16,10 +10,9 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.similarities.BM25Similarity;
-import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.example.analyzer.CustomAnalyzer;
 import org.example.model.QueryModel;
 
 import java.io.File;
@@ -35,13 +28,12 @@ public class Searcher {
     private static String INDEX_DIRECTORY = "index";
     private static int MAX_RESULTS = 1000;
 
-    public static void search(List<QueryModel> queryModelList, String outputDirName, String outputFileName) throws IOException {
+    public static void search(List<QueryModel> queryModelList, String outputDirName, String outputFileName, Analyzer analyzer, Similarity similarity) throws IOException {
         System.out.println("Searching Queries...");
-        Analyzer analyzer = new CustomAnalyzer();
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
         DirectoryReader indexReader = DirectoryReader.open(directory);
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-        indexSearcher.setSimilarity(new ClassicSimilarity());
+        indexSearcher.setSimilarity(similarity);
         List<String> resFileContent = new ArrayList<>();
         HashMap<String, Float> boostedScores = new HashMap<String, Float>();
         boostedScores.put("Title", 0.25f);

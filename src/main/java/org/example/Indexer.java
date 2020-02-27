@@ -6,7 +6,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.example.analyzer.CustomAnalyzer;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -14,9 +13,8 @@ import java.util.List;
 
 public class Indexer {
 
-    public static boolean index(List<Document> documentList, String indexPath, boolean update) throws IOException {
+    public static boolean index(List<Document> documentList, String indexPath, boolean update, Analyzer analyzer) throws IOException {
         Directory dir = getDirectory(indexPath);
-        Analyzer analyzer = new CustomAnalyzer();
         IndexWriter writer = getIndexWriter(update, dir, analyzer);
         indexDocs(documentList, writer);
         writer.close();

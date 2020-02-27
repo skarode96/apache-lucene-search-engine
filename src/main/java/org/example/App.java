@@ -1,6 +1,16 @@
 package org.example;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.core.StopAnalyzer;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
+import org.apache.lucene.search.similarities.Similarity;
+import org.example.analyzer.CustomAnalyzer;
 import org.example.model.CranFieldDoc;
 import org.example.model.QueryModel;
 import org.example.parser.CranFieldDocParser;
@@ -20,6 +30,8 @@ public class App {
         String cranDocPath = "cran/cran.all.1400";
         String outputDirName="output";
         String outputFileName="results.txt";
+        Analyzer analyzer = new CustomAnalyzer();
+        Similarity similarity = new BM25Similarity();
         boolean runIndex = false;
         boolean runQuery = false;
 
@@ -44,16 +56,64 @@ public class App {
             else if ("-outputfilename".equals(args[i])) {
                 outputFileName = args[i+1];
                 i++;
+            } else if("-analyzer".equals(args[i])) {
+                analyzer = getAnalyzer(args[i+1]);
+            }
+            else if("-similarity".equals(args[i])) {
+                similarity = getSimilarity(args[i+1]);
             }
         }
         if (runIndex) {
             List<CranFieldDoc> cranFieldDocs = CranFieldDocParser.readCranFieldDocs(cranDocPath);
             List<Document> documentList = DocumentCreator.createDocs(cranFieldDocs);
-            Indexer.index(documentList, indexPath, false);
+            Indexer.index(documentList, indexPath, false, analyzer);
         }
         if(runQuery) {
             List<QueryModel> queryModels = CranQueryParser.parseQueries(cranQueryDocPath);
-            Searcher.search(queryModels, outputDirName, outputFileName);
+            Searcher.search(queryModels, outputDirName, outputFileName, analyzer,similarity);
         }
+    }
+
+    private static Analyzer getAnalyzer(String arg) {
+        switch (arg) {
+            case "standard":  {
+                System.out.println("Using Standard Analyzer...");
+                return new StandardAnalyzer();
+            }
+            case "custom": {
+                System.out.println("Using Custom Analyzer...");
+                return new CustomAnalyzer();
+            }
+            case "simple": {
+                System.out.println("Using Simple Analyzer...");
+                return new SimpleAnalyzer();
+            }
+            case "whitespace": {
+                System.out.println("Using Whitespace Analyzer...");
+                return new WhitespaceAnalyzer();
+            }
+            case "english": {
+                System.out.println("Using English Analyzer...");
+                return new EnglishAnalyzer();
+            }
+            case "stop": {
+                System.out.println("Using Stop Analyzer...");
+                return new StopAnalyzer();
+            }
+        }
+        return new CustomAnalyzer();
+    }
+    private static Similarity getSimilarity(String arg) {
+        switch (arg) {
+            case "classis": {
+                System.out.println("Using Classic Similarity...");
+                return new ClassicSimilarity();
+            }
+            case "bm25": {
+                System.out.println("Using BM25 Similarity...");
+                return new BM25Similarity();
+            }
+        }
+        return new BM25Similarity();
     }
 }

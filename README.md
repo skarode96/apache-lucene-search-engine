@@ -29,13 +29,21 @@ GCC 5.4.0
 
 * Clone this repository to your designated directory.
 * Using a terminal - cd the cloned directory.
+
+run evaluate.sh from project root, it will run all the above commands using shell script
+
+```
+sh evaluate.sh
+```
+* by default it runs with CustomAnalyzer and BM25Similarity. If you want to perform individual operation follow next part
+
 * Run the following command to build jar package 
 ```
     mvn clean install -DskipTests   
 ```
 * Run the following command to index and search over created index 
 ```
- mvn exec:java -Dexec.mainClass="org.example.App" -Dexec.args="-indexpath index -querypath cran/cran.qry"
+ mvn exec:java -Dexec.mainClass="org.example.App" -Dexec.args="-indexpath index -querypath cran/cran.qry -analyzer custom -similarity bm25"
 ```
 * go to trec-eval directory using following command
 ```
@@ -44,4 +52,5 @@ GCC 5.4.0
 * Run the following command to get score
 ```
 ./trec_eval ../cran/QRelsCorrectedforTRECeval ../output/results.txt
-```
+``` 
+
