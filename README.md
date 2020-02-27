@@ -1,9 +1,9 @@
 # Apache-Lucene-Search-Engine
 
-#####Project developed under the coursework of  CS7IS3 - Information Retrieval and Web Search
+## Project developed under the coursework of  CS7IS3 - Information Retrieval and Web Search
 
 
-######Following is an implementation of the Apache Lucene Library (v7.5.0), written in Java.
+### Following is an implementation of the Apache Lucene Library (v7.5.0), written in Java.
 This search engine creates an index of the cranfield collection (Indexer.java), which allows you to query this index (Searcher.java). 
 It works off the basic Apache Lucene tutorials, with specific alterations and additions to the code to improve the search engine for specific needs.
 
