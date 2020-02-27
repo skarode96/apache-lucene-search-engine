@@ -9,7 +9,7 @@ It works off the basic Apache Lucene tutorials, with specific alterations and ad
 
 Trec-Eval can then be used to compare the scores of this search engine with the recommended scores and see the accuracy degree of this search engine.
 
-###Getting Started
+### Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
